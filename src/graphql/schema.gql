@@ -1,0 +1,140 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type GqlAuthChangeResponse {
+  response: String!
+}
+
+type GqlAuthUser {
+  auth_id: ID!
+  token: String!
+}
+
+type GqlAuthUserId {
+  auth_id: ID!
+}
+
+type GqlAuthResponseStatus {
+  status: String!
+}
+
+type GqlUserModel {
+  id: Float!
+  email: String!
+}
+
+type GqlBooking {
+  id: ID!
+  customer_id: Float!
+}
+
+type GqlOfferModel {
+  activity_id: ID!
+  name: String!
+  description: String!
+}
+
+type GqlTextResponseModel {
+  response: String!
+}
+
+type GqlCustomer {
+  id: ID!
+  first_name: String!
+  last_name: String!
+}
+
+type GqlPayment {
+  id: ID!
+  booking_id: Float!
+  date: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getUserId(email: AuthEmailInput!): GqlAuthUserId!
+  confirmAccountCreation(token: String!): Boolean!
+  authenticate: GqlUserModel!
+  getAuthenticatedUser(authCredentialsInput: AuthCredentialsInput!): GqlAuthUser!
+  getBooking(id: Int!): GqlBooking!
+  getSingleOffer(id: Float!): GqlOfferModel!
+  getAllOffers: GqlOfferModel!
+  getOffersByQuery(query: String!): GqlOfferModel!
+  getCustomerProfile(id: Int!): GqlCustomer!
+  getPayment(id: Int!): GqlPayment!
+}
+
+input AuthEmailInput {
+  email: String!
+}
+
+input AuthCredentialsInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  signUp(authCredentials: AuthCredentialsInput!): GqlAuthUser!
+  signIn(authCredentials: AuthCredentialsInput!): GqlUserModel!
+  signOut: GqlAuthResponseStatus!
+  refresh: GqlUserModel!
+  changeUserPassword(changePasswordInput: ChangePasswordInput!, id: Float!): GqlAuthChangeResponse!
+  deleteUserAccount(id: Float!): GqlAuthChangeResponse!
+  forgotPassword(email: AuthEmailInput!): GqlAuthChangeResponse!
+  setNewPassword(setNewPasswordInput: SetNewPasswordInput!, token: String!): GqlAuthChangeResponse!
+  createBooking(createBookingData: CreateBookingInput!): GqlBooking!
+  deleteBooking(id: Float!): Boolean!
+  updateBooking(updateBookingData: CreateBookingInput!, id: Float!): GqlBooking!
+  createOffer(createOfferInput: CreateOfferInput!): GqlOfferModel!
+  updateOffer(updateOfferInput: UpdateOfferInput!, id: Float!): GqlOfferModel!
+  deleteOffer(id: Float!): GqlTextResponseModel!
+  createCustomerProfile(createCustomerProfileData: CreateCustomerProfileInput!): GqlCustomer!
+  removeCustomerProfile(id: Float!): Boolean!
+  updateCustomerProfile(updateCustomerProfileData: UpdateCustomerProfileInput!, id: Float!): GqlCustomer!
+  createPayment(createPaymentData: CreatePaymentInput!): GqlPayment!
+  updatePayment(updatePaymentData: CreatePaymentInput!, id: Float!): GqlPayment!
+}
+
+input ChangePasswordInput {
+  old_password: String!
+  new_password: String!
+}
+
+input SetNewPasswordInput {
+  new_password: String!
+}
+
+input CreateBookingInput {
+  customer_id: Float!
+}
+
+input CreateOfferInput {
+  name: String!
+  description: String!
+}
+
+input UpdateOfferInput {
+  name: String!
+  description: String!
+}
+
+input CreateCustomerProfileInput {
+  first_name: String!
+  last_name: String!
+}
+
+input UpdateCustomerProfileInput {
+  first_name: String!
+  last_name: String!
+}
+
+input CreatePaymentInput {
+  booking_id: Float!
+  amount: Float!
+  card_token: Float!
+}
